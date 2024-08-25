@@ -38,6 +38,8 @@ class QuestionCardView @JvmOverloads constructor(
             field = value
             value ?: return
             binding.answers.children.elementAt(value).isSelected = true
+            // I had to call the newly implemented function setSelection()
+            setSelection()
         }
 
     init {
@@ -54,14 +56,32 @@ class QuestionCardView @JvmOverloads constructor(
     }
 
     private fun onAnswerClick(view: View) {
-        if (!view.isSelected) {
+        /*if (!view.isSelected) {
             binding.answers.children.filter { it.isSelected }.forEach {
                 it.isSelected = false
             }
+        } */
+
+        val index = binding.answers.indexOfChild(view)
+        if (index != -1) {
+            selection = index // Update selection index
         }
     }
 
     private fun setSelection() {
+        // To set any new selection I had to deselect the answer that has been selected already
+        binding.answers.children.forEach { child ->
+            if (child is AnswerCardView) {
+                child.isSelected = false
+            }
+        }
 
+        // Select the answer at the index specified by `selection`
+        selection?.let { index ->
+            val answerView = binding.answers.getChildAt(index)
+            if (answerView is AnswerCardView) {
+                answerView.isSelected = true
+            }
+        }
     }
 }

@@ -12,6 +12,8 @@ import com.glucode.about_you.mockdata.MockData
 
 class EngineersFragment : Fragment() {
     private lateinit var binding: FragmentEngineersBinding
+    private var engineers: List<Engineer> = MockData.engineers
+    private lateinit var adapter: EngineersRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,7 +22,16 @@ class EngineersFragment : Fragment() {
     ): View {
         binding = FragmentEngineersBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
-        setUpEngineersList(MockData.engineers)
+
+        // Initialize the adapter with the engineers list
+        adapter = EngineersRecyclerViewAdapter(engineers) {
+            goToAbout(it)
+        }
+        binding.list.adapter = adapter
+
+        // Set up the RecyclerView
+        setUpEngineersList()
+
         return binding.root
     }
 
@@ -30,18 +41,37 @@ class EngineersFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_years) {
-            return true
+        return when (item.itemId) {
+            R.id.action_years -> {
+                sortEngineersByAttribute("years")
+                true
+            }
+            R.id.action_coffees -> {
+                sortEngineersByAttribute("coffees")
+                true
+            }
+            R.id.action_bugs -> {
+                sortEngineersByAttribute("bugs")
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
-    private fun setUpEngineersList(engineers: List<Engineer>) {
-        binding.list.adapter = EngineersRecyclerViewAdapter(engineers) {
-            goToAbout(it)
-        }
+    private fun setUpEngineersList() {
+        // Add any additional setup for the RecyclerView here
         val dividerItemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         binding.list.addItemDecoration(dividerItemDecoration)
+    }
+
+    private fun sortEngineersByAttribute(attribute: String) {
+        engineers = when (attribute) {
+            "years" -> engineers.sortedBy { it.quickStats.years }
+            "coffees" -> engineers.sortedBy { it.quickStats.coffees }
+            "bugs" -> engineers.sortedBy { it.quickStats.bugs }
+            else -> engineers
+        }
+        adapter.updateEngineers(engineers) // Update the adapter with the sorted list
     }
 
     private fun goToAbout(engineer: Engineer) {

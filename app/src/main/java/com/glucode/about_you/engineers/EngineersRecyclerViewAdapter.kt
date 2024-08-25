@@ -21,6 +21,11 @@ class EngineersRecyclerViewAdapter(
         holder.bind(engineers[position], onClick)
     }
 
+    fun updateEngineers(newEngineers: List<Engineer>) {
+        engineers = newEngineers
+        notifyDataSetChanged() // Notify the adapter that data has changed
+    }
+
     inner class EngineerViewHolder(private val binding: ItemEngineerBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(engineer: Engineer, onClick: (Engineer) -> Unit) {
@@ -31,6 +36,7 @@ class EngineersRecyclerViewAdapter(
             }
             //TODO - set profile picture
 //            statusIcon.setDrawable(item.icon)
+            binding.profileImage.setImageURI(engineer.defaultImageName)
         }
     }
 }

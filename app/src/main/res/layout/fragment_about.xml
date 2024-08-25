@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/container"
-        app:dividerPadding="0dp"
-        app:showDividers="beginning|middle|end"
-        app:divider="@drawable/ic_filter"
+    <!-- Root LinearLayout to contain both the include and the container -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:clipChildren="false"
-        android:clipToPadding="false"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/padding_normal"
-        android:orientation="vertical" />
+        android:orientation="vertical">
+
+        <!-- Include Profile View Layout -->
+        <include
+            layout="@layout/profile_view"
+            android:id="@+id/profile_view"/>
+
+        <!-- About Container -->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/container"
+            app:dividerPadding="16dp"
+            app:showDividers="beginning|middle|end"
+            app:divider="@drawable/ic_filter"
+            android:layout_width="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/padding_normal"
+            android:orientation="vertical" />
+
+    </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
