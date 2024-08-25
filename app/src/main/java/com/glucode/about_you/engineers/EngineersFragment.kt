@@ -10,7 +10,7 @@ import com.glucode.about_you.databinding.FragmentEngineersBinding
 import com.glucode.about_you.engineers.models.Engineer
 import com.glucode.about_you.mockdata.MockData
 
-class EngineersFragment : Fragment() {
+open class EngineersFragment : Fragment() {
     private lateinit var binding: FragmentEngineersBinding
     private var engineers: List<Engineer> = MockData.engineers
     private lateinit var adapter: EngineersRecyclerViewAdapter
