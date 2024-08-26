@@ -12,7 +12,7 @@ import com.glucode.about_you.mockdata.MockData
 
 open class EngineersFragment : Fragment() {
     private lateinit var binding: FragmentEngineersBinding
-    private var engineers: List<Engineer> = MockData.engineers
+    var engineers: List<Engineer> = MockData.engineers
     private lateinit var adapter: EngineersRecyclerViewAdapter
 
     override fun onCreateView(
@@ -64,7 +64,7 @@ open class EngineersFragment : Fragment() {
         binding.list.addItemDecoration(dividerItemDecoration)
     }
 
-    private fun sortEngineersByAttribute(attribute: String) {
+    fun sortEngineersByAttribute(attribute: String) {
         engineers = when (attribute) {
             "years" -> engineers.sortedBy { it.quickStats.years }
             "coffees" -> engineers.sortedBy { it.quickStats.coffees }

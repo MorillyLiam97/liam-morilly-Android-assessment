@@ -7,7 +7,7 @@ import com.glucode.about_you.engineers.models.Question
 import com.glucode.about_you.engineers.models.QuickStats
 
 object MockData {
-    private val defaultImageUri: Uri = Uri.parse("android.resource://com.glucode.about_you/drawable/ic_person")
+    val defaultImageUri: Uri = Uri.parse("android.resource://com.glucode.about_you/drawable/ic_person")
     val engineers = listOf(
         Engineer(
             name = "Reenen",
